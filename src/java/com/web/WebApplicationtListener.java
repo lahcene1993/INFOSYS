@@ -111,7 +111,7 @@ public class WebApplicationtListener implements ServletContextListener, javax.se
 
         }
 
-        /*try {
+        try {
             WebManager manager = new WebManager()
                     .setAdress("ADMIN")
                     .setCodePostal("ADMIN")
@@ -124,7 +124,7 @@ public class WebApplicationtListener implements ServletContextListener, javax.se
                     .setAdmin(true);
             new WebEntityManager(WebManager.class).create(manager);
         } catch (Exception e) {
-        }*/
+        }
     }
 
     @Override
