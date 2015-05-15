@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FICHE DE DEMANDE" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="fd1c641d-002e-44ea-9160-575debd8393b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="113"/>
+	<parameter name="ID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     demande.`cinn` AS demande_cinn,
+     demande.`nom` AS demande_nom,
+     demande.`prenom` AS demande_prenom,
+     demande.`service` AS demande_service,
+     demande.`grade` AS demande_grade,
+     demande.`date_debut` AS demande_date_debut,
+     demande.`mois` AS demande_mois,
+     demande.`typee_de_conge` AS demande_typee_de_conge,
+     demande.`nb_jour` AS demande_nb_jour,
+     demande.`nb_heur` AS demande_nb_heur,
+     demande.`id_dem` AS demande_id_dem
+FROM
+     `demande` demande
+WHERE
+     demande."id_dem" = $P{ff}]]>
+	</queryString>
+	<field name="demande_cinn" class="java.lang.String"/>
+	<field name="demande_nom" class="java.lang.String"/>
+	<field name="demande_prenom" class="java.lang.String"/>
+	<field name="demande_service" class="java.lang.String"/>
+	<field name="demande_grade" class="java.lang.String"/>
+	<field name="demande_date_debut" class="java.lang.Integer"/>
+	<field name="demande_mois" class="java.lang.Integer"/>
+	<field name="demande_typee_de_conge" class="java.lang.String"/>
+	<field name="demande_nb_jour" class="java.lang.Integer"/>
+	<field name="demande_nb_heur" class="java.lang.Integer"/>
+	<field name="demande_id_dem" class="java.lang.Integer"/>
+	<background>
+		<band height="802" splitType="Stretch">
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement uuid="c970d378-9fe7-4ae3-99c2-5e50e7216fa6" x="0" y="0" width="555" height="100"/>
+				<imageExpression><![CDATA["C:\\Users\\ADMIN\\Documents\\NetBeansProjects\\Web\\src\\java\\com\\web\\report\\entééééééééte.JPG"]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement uuid="5375a7a6-bbaa-4f8d-b87a-8e45b8c2f04a" x="0" y="702" width="555" height="100"/>
+				<imageExpression><![CDATA["C:\\Users\\ADMIN\\Documents\\NetBeansProjects\\Web\\src\\java\\com\\web\\report\\piéd.JPG"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="100" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="588" splitType="Stretch">
+			<textField>
+				<reportElement uuid="d5be8dbd-1a00-4045-a5a8-3311e3b07626" x="119" y="121" width="296" height="20"/>
+				<textElement>
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DECISION DE CONGE "+$F{demande_type_de_conge}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f05cd84c-8fae-4fab-ac2f-1541c666c572" x="43" y="152" width="490" height="176"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[La Directrice de l’Agence Urbaine de Ouarzazate-Zagora ;
+
+Vu le dahir portant loi n° 1.93.51 du 22 Rebia I 1414 (10 septembre 1993) instituant les Agences Urbaines.
+
+Vu le décret n° 2.93.67 du 04 Rebia II 1414 (21 septembre 1993) pris pour l’application du dahir portant institution des Agences Urbaines.
+
+Vu le décret n° 2.03.221 du 14 Rebia I 1425 (04 mai 2004) instituant   les Agences Urbaines de Nador, Houceima, Ouarzazate-Zagora, Oued Eddahab-Aousred, Errachidia et Goulmim-Essmara.
+
+Vu le règlement régissant le personnel de l’Agence Urbaine de Ouarzazate –Zagora, portant visa du Ministère des Finances et de la Privatisation n° 1320/E  du 08 mars 2006 et notamment l’article  18.
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8c7528c5-0466-4f6b-96a9-4ed7d2973e7c" x="43" y="346" width="293" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Vu  la demande formulée par M.Elkorchi Khalid en date du "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d073d636-b679-47f4-ae7e-99983ffdcae4" x="43" y="392" width="480" height="68"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Article 1 : Un congé "+$F{demande_type_de_conge}
++", de "+$F{demande_nb_jour}+" jours, allant du : "+$F{demande_date_debut}+" au "+$F{demande_date_fin}
++"; est accordé à "+ $F{demande_nom}+" "+$F{demande_prenom}+" Cadre "+$F{demande_grade}+" relevant du Département "]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy">
+				<reportElement uuid="36abb196-43c2-4857-8bf4-26db5aa87840" x="450" y="508" width="83" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{demande_date_fin}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy">
+				<reportElement uuid="884dfaf9-13ae-4fc8-8f59-27b235d9132b" x="281" y="482" width="152" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{demande_date_fin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6e13c1ed-2665-4de5-8f98-d4a29908d0c4" x="43" y="482" width="264" height="20"/>
+				<textElement/>
+				<text><![CDATA[Article 2 : Ce congé est accordé au titre de l’année ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="426553be-ff5c-4876-b326-9bb2920056b7" x="308" y="63" width="125" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Desision N°"+$F{demande_id}+" Du "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fbcefd36-fccf-4e57-abc1-cecdc7e9912f" x="19" y="8" width="262" height="45"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Agence Urbaine Ouarzazate-Zagoura \n Devision des Affaires Administratives et Financieres \n N°"
++$F{demande_id}+"D.A.A.F/S.P.E.D"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="29224548-0dd6-4d78-8807-56b57aa88e3a" x="439" y="63" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="29224548-0dd6-4d78-8807-56b57aa88e3a" x="308" y="346" width="131" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bc50ae89-6efe-4618-8063-a2d0b62e4054" x="43" y="508" width="453" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[ "l'intéressé conserve un reliquat de"+ $F{demande_nb_jour}+" jours, sur ses droits au congé "+ $F{demande_type_de_conge}+" au titre de l'année"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="100" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

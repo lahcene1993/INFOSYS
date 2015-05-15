@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="medel" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dadb5dae-8638-4de5-ad06-1ed5c1c56a42">
+	<property name="ireport.zoom" value="0.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ID" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+     webfacture."id" AS webfacture_id,
+     webfacture."date" AS webfacture_date,
+     webfacture."etat" AS webfacture_etat,
+     webfacture."type" AS webfacture_type,
+     webfactureitem."prix" AS webfactureitem_prix,
+     webfactureitem."quantite" AS webfactureitem_quantite,
+     webclient."nom" AS webclient_nom,
+     webproduct."libele" AS webproduct_libele,
+     webtax."value" AS webtax_value,
+     webreglementmode."name" AS webreglementmode_name,
+     webinformation."nom" AS webinformation_nom
+FROM
+     "public"."webfacture" webfacture INNER JOIN "public"."webfactureitem" webfactureitem ON webfacture."id" = webfactureitem."facture"
+     INNER JOIN "public"."webclient" webclient ON webfacture."client" = webclient."id"
+     INNER JOIN "public"."webtax" webtax ON webfacture."tax" = webtax."id"
+     INNER JOIN "public"."webreglementmode" webreglementmode ON webfacture."mode" = webreglementmode."id"
+     INNER JOIN "public"."webproduct" webproduct ON webfactureitem."product" = webproduct."id",
+     "public"."webinformation" webinformation
+WHERE 
+webfacture."id"=$P{ID}]]>
+	</queryString>
+	<field name="webfacture_id" class="java.lang.Long"/>
+	<field name="webfacture_date" class="java.sql.Date"/>
+	<field name="webfacture_etat" class="java.lang.Boolean"/>
+	<field name="webfacture_type" class="java.lang.Integer"/>
+	<field name="webfactureitem_prix" class="java.lang.Double"/>
+	<field name="webfactureitem_quantite" class="java.lang.Integer"/>
+	<field name="webclient_nom" class="java.lang.String"/>
+	<field name="webproduct_libele" class="java.lang.String"/>
+	<field name="webtax_value" class="java.lang.Double"/>
+	<field name="webreglementmode_name" class="java.lang.String"/>
+	<field name="webinformation_nom" class="java.lang.String"/>
+	<variable name="Total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{webfactureitem_prix}*$F{webfactureitem_quantite}]]></variableExpression>
+	</variable>
+	<background>
+		<band height="802" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="0" y="0" width="555" height="802" uuid="38f78756-5dea-4e01-961c-c61b0d062bd8"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="0" y="200" width="555" height="400" uuid="5c1521fe-6a5f-41bf-b172-81f5c694d7aa"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="255" y="600" width="300" height="60" uuid="4a1e721b-032b-426a-ba4e-acf37c353a94"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="10" y="120" width="250" height="60" uuid="46869468-1be2-4b98-92cf-fc61e2d30732"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="230" width="555" height="1" uuid="ece2d484-fde3-40a2-bffb-bf695aef6d9b"/>
+			</line>
+			<line>
+				<reportElement x="255" y="200" width="1" height="400" uuid="e966f42d-2b96-409b-99c9-fa2bec78f9e8"/>
+			</line>
+			<line>
+				<reportElement x="455" y="200" width="1" height="400" uuid="2a8be639-e1c6-4ea9-8843-da4f0d3bf8fe"/>
+			</line>
+			<line>
+				<reportElement x="355" y="200" width="1" height="400" uuid="4adf6422-3997-43b0-87f0-8d71489fd0ea"/>
+			</line>
+		</band>
+	</background>
+	<title>
+		<band height="200" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="3" width="555" height="78" uuid="f8490cd1-71ac-4450-ba6f-ef6f09eff12b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{webinformation_nom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="145" width="100" height="20" uuid="76577dff-2bf2-4547-9ece-7185b20a8e5c"/>
+				<textFieldExpression><![CDATA[$F{webclient_nom}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd">
+				<reportElement x="130" y="167" width="100" height="20" uuid="2386d6bb-5901-4a3d-8e3a-e780a8cfd8e9"/>
+				<textFieldExpression><![CDATA[$F{webfacture_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="123" width="100" height="20" uuid="c7d8b798-df3b-4f92-9769-3bf40c2c574b"/>
+				<textFieldExpression><![CDATA[$F{webfacture_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="26" y="124" width="100" height="20" uuid="3178db01-597e-4ec7-a213-c9c7ea2078be"/>
+				<text><![CDATA[Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="165" width="100" height="20" uuid="14bdb1b6-d2d5-4927-bb2a-d1ee30bd5dbe"/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="145" width="100" height="20" uuid="31075071-c30f-4913-beb5-b0ced665396b"/>
+				<text><![CDATA[Client]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="255" height="20" uuid="e6f2dc0b-911d-4f3e-8135-c46bea0e54ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Article]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="2" width="100" height="20" uuid="30cd9cc6-bf19-40e6-8c55-2a7b18ddc834"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Quantite]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="2" width="100" height="20" uuid="57d1853a-553e-44e8-9ebd-0fd67b130c82"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Prix]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="1" width="100" height="20" uuid="bbe82bad-d23d-4f88-ac31-0be63a5c11c7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="255" height="20" uuid="e58a0d7a-249f-4226-8e54-6829978ad426"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{webproduct_libele}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="10" width="100" height="20" uuid="15ba80e8-4006-488a-a823-970e5e0cebb4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{webfactureitem_quantite}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="10" width="100" height="20" uuid="8e54ea15-88e2-4e45-ba2c-af10e11ca1f9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{webfactureitem_prix}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="10" width="100" height="20" uuid="dfd687f4-9a09-4899-ac91-74ad03191d39"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{webfactureitem_prix}*$F{webfactureitem_quantite}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="80" splitType="Stretch">
+			<textField>
+				<reportElement x="403" y="0" width="150" height="20" uuid="116cda32-2493-494c-b3bc-7f11e41f9971"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{Total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="403" y="20" width="152" height="20" uuid="dfc75061-6644-493e-be5f-eacfc0d7764b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{webtax_value}*$V{Total}/100]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="403" y="40" width="150" height="20" uuid="b4c2d153-9760-417c-8f04-ebe4b40e1a77"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{Total}*($F{webtax_value}/100) +$V{Total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="260" y="0" width="143" height="20" uuid="04191ea9-2b6b-44ef-a642-e57dfc937c83"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Montant HT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="20" width="143" height="20" uuid="8eddc71c-2ced-4f3f-b179-b2f2cbf0584a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[TVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="40" width="143" height="20" uuid="328fda8c-c429-4e24-b231-1977d086b71e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[TTC]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="122" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="10" y="96" width="100" height="20" uuid="44d2c268-5bb9-49f3-b48e-85956494a4e1"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="500" y="72" width="53" height="50" uuid="f6b1ea9c-9710-4a85-a9bd-25ee6ea2729a"/>
+				<jr:DataMatrix xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+					<jr:codeExpression><![CDATA[$F{webfacture_id}]]></jr:codeExpression>
+				</jr:DataMatrix>
+			</componentElement>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
