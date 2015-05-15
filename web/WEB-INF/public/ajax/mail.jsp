@@ -10,7 +10,7 @@
         <label></label>
         <input type="text" required name="subject" class="form-control">
         <label></label>
-        <textarea name="editor1" required class="form-control ckeditor" id="editor1"></textarea>
+        <textarea name="body" required class="form-control ckeditor" id="editor1"> </textarea>
         <script>
             $('textarea').ckeditor();
         </script>

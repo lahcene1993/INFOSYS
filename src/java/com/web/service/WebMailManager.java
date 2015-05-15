@@ -14,6 +14,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 
 public class WebMailManager {
 
@@ -65,20 +67,36 @@ public class WebMailManager {
         this.files = files;
     }
 
+    public WebMailManager(HttpServletRequest request) throws Exception {
+        this();
+        if (request.getParameter("from") != null && !request.getParameter("from").equals("")) {
+            this.from = request.getParameter("from");
+        }
+        if (request.getParameter("to") != null && !request.getParameter("to").equals("")) {
+            this.to = request.getParameter("to");
+        }
+        if (request.getParameter("subject") != null && !request.getParameter("subject").equals("")) {
+            this.subject = request.getParameter("subject");
+        }
+        if (request.getParameter("body") != null && !request.getParameter("body").equals("")) {
+            this.body = request.getParameter("body");
+        }
+    }
+
     public WebMailManager() throws Exception {
         Properties props = new Properties();
         props.put("mail.smtp.debug", "true");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.mime.charset", "ISO-8859-1");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.starttls.required", "true");
-        props.put("mail.smtp.host", "");
-        props.put("mail.smtp.port", 25);
+         props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
+            props.put("mail.smtp.port", "587"); //TLS Port
+            props.put("mail.smtp.auth", "true"); //enable authentication
+            props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
+
+
         this.session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("", "");
+                        return new PasswordAuthentication("af.lahcene1993@gmail.com", "195610ADMIN");
                     }
                 });
 
@@ -100,21 +118,24 @@ public class WebMailManager {
             this.message.setSubject(this.subject);
 
             txtPart.setDisposition(Part.INLINE);
-            txtPart.setText(body);
+            txtPart.setText(body,"UTF-8", "html");
             mp.addBodyPart(txtPart);
-            for (String f : files) {
-                MimeBodyPart filePart = new MimeBodyPart();
-                File file = (File) new File(f);
-                FileDataSource fds = new FileDataSource(file);
-                DataHandler dh = new DataHandler(fds);
-                filePart.setFileName(file.getName());
-                filePart.setDisposition(Part.ATTACHMENT);
-                filePart.setDescription("Attached file: " + file.getName());
-                filePart.setDataHandler(dh);
-                mp.addBodyPart(filePart);
+            if (files != null) {
+                for (String f : files) {
+                    MimeBodyPart filePart = new MimeBodyPart();
+                    File file = (File) new File(f);
+                    FileDataSource fds = new FileDataSource(file);
+                    DataHandler dh = new DataHandler(fds);
+                    filePart.setFileName(file.getName());
+                    filePart.setDisposition(Part.ATTACHMENT);
+                    filePart.setDescription("Attached file: " + file.getName());
+                    filePart.setDataHandler(dh);
+                    mp.addBodyPart(filePart);
+                }
             }
             this.message.setContent(mp);
-            Transport.send(this.message);
+            Transport.send(this.message,message.getAllRecipients());
+           
             return true;
         } catch (MessagingException e) {
             return false;

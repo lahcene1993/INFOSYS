@@ -84,7 +84,10 @@ public class DefaultController extends HttpServlet {
         }
         if(request.getParameter("SEND")!=null){
             try {
-                WebMailManager manager=new WebMailManager();
+                WebMailManager manager=new WebMailManager(request);
+                if(manager.send()){
+                    response.sendError(201);
+                }
             } catch (Exception ex) {
                 Logger.getLogger(DefaultController.class.getName()).log(Level.SEVERE, null, ex);
             }

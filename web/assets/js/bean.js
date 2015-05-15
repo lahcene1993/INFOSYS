@@ -1,11 +1,10 @@
 var req = true;
+$.ajaxSetup({
+  timeout:5000
+});
 $(document).on('submit', '.form-show', function(e) {
     e.preventDefault();
-    $.post("",
-            {
-                SHOW: true,
-                id: this.id.value
-            },
+    $.post("",$(form).serialize(),
     function(data, status) {
         toastr.success("", status);
         if ($(data).attr('id') === 'ajax') {
@@ -22,12 +21,7 @@ $(document).on('submit', '.form-delete', function(e) {
     form = $(this);
     bootbox.confirm("Vous etes sur ?", function(result) {
         if (result === true) {
-            $.post("",
-                    {
-                        DELETE: true,
-                        id: $(form).find('input[name="id"]').val()
-                    }
-            )
+            $.post("",$(form).serialize())
                     .done(function(data, status) {
                         toastr.success("", status);
                         $(form).closest("tr").remove();
@@ -84,7 +78,6 @@ $("#create").click(function(event) {
 $(document).on('submit', '#form-stock', function(e) {
     e.preventDefault();
     var form = $(this);
-        alert()
         $.post("", $(form).serialize()
                 )
                 .done(function(data, status) {
@@ -101,7 +94,6 @@ $(document).on('submit', '#form-stock', function(e) {
 });
 $(document).on('submit', '.form-remove', function(e) {
     e.preventDefault();
-    alert($(this).serialize())
     var form=$(this);
     if (req) {
         req = false;
